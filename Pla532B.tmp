@@ -1,0 +1,105 @@
+[gd_scene load_steps=8 format=3 uid="uid://c635mkpjm5xgl"]
+
+[ext_resource type="Script" path="res://Player.gd" id="1_ifuu7"]
+[ext_resource type="Texture2D" uid="uid://2880kqnq3j0u" path="res://icon.svg" id="2_6n7c1"]
+[ext_resource type="Script" path="res://Gun.gd" id="3_gn4og"]
+[ext_resource type="PackedScene" uid="uid://dheutwpacdmaw" path="res://bullet.tscn" id="4_qpkyl"]
+[ext_resource type="Script" path="res://Enemy_Spawner.gd" id="5_xb5fs"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_w333t"]
+size = Vector2(64, 64)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jx22g"]
+size = Vector2(67, 67)
+
+[node name="Player" type="CharacterBody2D" groups=["player"]]
+collision_layer = 2
+collision_mask = 7
+motion_mode = 1
+script = ExtResource("1_ifuu7")
+max_speed = 500.0
+friction = 2000
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_6n7c1")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_w333t")
+
+[node name="Gun" type="Node2D" parent="."]
+script = ExtResource("3_gn4og")
+bullet_scn = ExtResource("4_qpkyl")
+bullet_speed = 2500.0
+
+[node name="muzzle" type="Node2D" parent="Gun"]
+position = Vector2(37, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="Gun/muzzle"]
+modulate = Color(0.505882, 0.164706, 0.368627, 1)
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("2_6n7c1")
+
+[node name="Enemy_Spawner" type="Node2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="Enemy_Spawner"]
+script = ExtResource("5_xb5fs")
+
+[node name="Enemy_Check" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Enemy_Check"]
+position = Vector2(0.5, -0.5)
+shape = SubResource("RectangleShape2D_jx22g")
+
+[node name="HealthBar" type="ProgressBar" parent="."]
+offset_left = -127.0
+offset_top = -71.0
+offset_right = 136.0
+offset_bottom = -44.0
+step = 0.1
+show_percentage = false
+
+[node name="Kill_Count" type="Label" parent="."]
+offset_left = 423.0
+offset_top = 285.0
+offset_right = 463.0
+offset_bottom = 308.0
+text = "Kills:"
+
+[node name="attack_boost" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true
+
+[node name="attack_boost_timer" type="Label" parent="."]
+offset_left = 396.0
+offset_top = 240.0
+offset_right = 436.0
+offset_bottom = 263.0
+text = "Time_left :"
+
+[node name="speed_Label" type="Label" parent="."]
+offset_left = 398.0
+offset_top = 200.0
+offset_right = 438.0
+offset_bottom = 223.0
+
+[node name="speed_boost" type="Timer" parent="."]
+wait_time = 3.0
+
+[node name="Level" type="ProgressBar" parent="."]
+modulate = Color(0.760784, 0.298039, 0.631373, 1)
+offset_left = -163.0
+offset_top = 306.0
+offset_right = -129.0
+offset_bottom = 713.0
+rotation = -1.56907
+scale = Vector2(1.08096, 1.33747)
+fill_mode = 2
+show_percentage = false
+
+[connection signal="area_entered" from="Enemy_Check" to="." method="_on_enemy_check_area_entered"]
+[connection signal="area_exited" from="Enemy_Check" to="." method="_on_enemy_check_area_exited"]
+[connection signal="timeout" from="attack_boost" to="." method="_on_attack_boost_timeout"]
+[connection signal="timeout" from="speed_boost" to="." method="_on_speed_boost_timeout"]

@@ -1,0 +1,52 @@
+[gd_scene load_steps=5 format=3 uid="uid://cfu01df35rxhb"]
+
+[ext_resource type="Script" path="res://rpg.gd" id="1_8iqaa"]
+[ext_resource type="Texture2D" uid="uid://b05ganba61p8w" path="res://Assests/effect_pack/11_fire_spritesheet.png" id="2_lvp5g"]
+[ext_resource type="Texture2D" uid="uid://cgmhbs2divejg" path="res://Assests/effect_pack/16_sunburn_spritesheet.png" id="3_bms81"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ocmub"]
+radius = 27.0
+
+[node name="RPG" type="RigidBody2D"]
+collision_layer = 4
+collision_mask = 0
+mass = 0.01
+gravity_scale = 0.0
+lock_rotation = true
+freeze_mode = 1
+script = ExtResource("1_8iqaa")
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_ocmub")
+disabled = true
+
+[node name="Timer" type="Timer" parent="."]
+one_shot = true
+autostart = true
+
+[node name="Free_Timer" type="Timer" parent="."]
+wait_time = 1.1
+one_shot = true
+autostart = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+rotation = -1.5708
+texture = ExtResource("2_lvp5g")
+hframes = 8
+vframes = 8
+
+[node name="Sprite2D2" type="Sprite2D" parent="."]
+visible = false
+scale = Vector2(2, 2)
+texture = ExtResource("3_bms81")
+hframes = 8
+vframes = 8
+
+[connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="timeout" from="Free_Timer" to="." method="_on_free_timer_timeout"]

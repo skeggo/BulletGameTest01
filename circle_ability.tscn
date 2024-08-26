@@ -1,0 +1,27 @@
+[gd_scene load_steps=5 format=3 uid="uid://bgulyyvo7kl3e"]
+
+[ext_resource type="Script" path="res://circle_ability1.gd" id="1_p6o6p"]
+[ext_resource type="Script" path="res://Circle_ability.gd" id="1_rrfum"]
+[ext_resource type="Texture2D" uid="uid://ceeoh2ab4iob5" path="res://Assests/effect_pack/13_vortex_spritesheet.png" id="2_t0yna"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_annnx"]
+radius = 28.1603
+
+[node name="Circle_ability" type="Node2D"]
+scale = Vector2(0.5, 0.5)
+script = ExtResource("1_p6o6p")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_t0yna")
+hframes = 8
+vframes = 8
+script = ExtResource("1_rrfum")
+radius = 200.0
+
+[node name="Area2D" type="Area2D" parent="Sprite2D"]
+collision_layer = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D/Area2D"]
+shape = SubResource("CircleShape2D_annnx")
+
+[connection signal="area_entered" from="Sprite2D/Area2D" to="." method="_on_area_2d_area_entered"]

@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=3 uid="uid://cm6tgtlmb0l4o"]
+
+[ext_resource type="Script" path="res://Heals.gd" id="1_3nx53"]
+[ext_resource type="Texture2D" uid="uid://c7x3ddbsse8gg" path="res://Assests/2. Heart.png" id="2_ultom"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_0spj7"]
+radius = 11.0
+
+[node name="Area2D" type="Area2D" groups=["consumables"]]
+collision_layer = 2
+collision_mask = 7
+script = ExtResource("1_3nx53")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_0spj7")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(0.996078, 0, 0.0392157, 1)
+position = Vector2(-0.5, 0.5)
+scale = Vector2(1.91667, 1.91667)
+texture = ExtResource("2_ultom")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

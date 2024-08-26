@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://do3y6t6ehu3bj"]
+
+[ext_resource type="Script" path="res://xp_particule.gd" id="1_02eii"]
+[ext_resource type="Texture2D" uid="uid://bnwtu6r55vcnh" path="res://Assests/10. Circ Select.png" id="2_c8d5u"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_tsgxt"]
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource("1_02eii")
+
+[node name="Node2D" type="Area2D" parent="." groups=["XP"]]
+collision_layer = 2
+collision_mask = 7
+
+[node name="Sprite2D" type="Sprite2D" parent="Node2D"]
+modulate = Color(0, 0.74902, 0.298039, 1)
+texture = ExtResource("2_c8d5u")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Node2D"]
+shape = SubResource("CircleShape2D_tsgxt")
+
+[connection signal="area_entered" from="Node2D" to="." method="_on_node_2d_area_entered"]

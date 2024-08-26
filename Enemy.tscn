@@ -1,0 +1,60 @@
+[gd_scene load_steps=7 format=3 uid="uid://l3qug8sbecd3"]
+
+[ext_resource type="Script" path="res://Enemy.gd" id="1_ebgba"]
+[ext_resource type="Texture2D" uid="uid://c4av88v0h76bd" path="res://Assests/Basic Asset Pack/basic magical animations/corrupted treant/CorruptedTreant.png" id="2_igupt"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_l086q"]
+radius = 18.0278
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_w668b"]
+size = Vector2(32, 36)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ewf7h"]
+size = Vector2(31, 34)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_t6qem"]
+size = Vector2(28, 32)
+
+[node name="Enemy" type="CharacterBody2D" groups=["enemy"]]
+collision_layer = 2
+collision_mask = 3
+motion_mode = 1
+wall_min_slide_angle = 0.0
+script = ExtResource("1_ebgba")
+speed = 125.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_l086q")
+disabled = true
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(1, 0.333333, 1, 1)
+scale = Vector2(2, 2)
+texture = ExtResource("2_igupt")
+hframes = 4
+
+[node name="bullet_hitbox" type="Area2D" parent="." groups=["enemy"]]
+position = Vector2(-1, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="bullet_hitbox"]
+position = Vector2(1, 0)
+shape = SubResource("RectangleShape2D_w668b")
+
+[node name="Player_Hitbox" type="Area2D" parent="." groups=["enemy"]]
+collision_layer = 2
+collision_mask = 2
+collision_priority = 0.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player_Hitbox"]
+position = Vector2(0.5, 0)
+shape = SubResource("RectangleShape2D_ewf7h")
+
+[node name="effect_hitbox" type="Area2D" parent="." groups=["enemy"]]
+collision_layer = 8
+collision_mask = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="effect_hitbox"]
+shape = SubResource("RectangleShape2D_t6qem")
+
+[connection signal="area_entered" from="effect_hitbox" to="." method="_on_effect_hitbox_area_entered"]
+[connection signal="area_exited" from="effect_hitbox" to="." method="_on_effect_hitbox_area_exited"]

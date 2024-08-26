@@ -1,0 +1,45 @@
+[gd_scene load_steps=6 format=3 uid="uid://l3qug8sbecd3"]
+
+[ext_resource type="Texture2D" uid="uid://2880kqnq3j0u" path="res://icon.svg" id="1_181e0"]
+[ext_resource type="Script" path="res://Enemy.gd" id="1_ebgba"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_l086q"]
+radius = 28.0223
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_w668b"]
+size = Vector2(67, 64)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ewf7h"]
+size = Vector2(71, 66)
+
+[node name="Enemy" type="CharacterBody2D"]
+collision_layer = 2
+collision_mask = 3
+motion_mode = 1
+wall_min_slide_angle = 0.0
+script = ExtResource("1_ebgba")
+speed = 300.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(1, -0.5)
+shape = SubResource("CircleShape2D_l086q")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(1, 0.333333, 1, 1)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_181e0")
+
+[node name="bullet_hitbox" type="Area2D" parent="."]
+position = Vector2(-1, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="bullet_hitbox"]
+position = Vector2(1.5, -1)
+shape = SubResource("RectangleShape2D_w668b")
+
+[node name="Player_Hitbox" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player_Hitbox"]
+position = Vector2(0.5, -1)
+shape = SubResource("RectangleShape2D_ewf7h")

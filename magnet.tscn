@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://b7riqbn8owhyo"]
+
+[ext_resource type="Script" path="res://Heals.gd" id="1_01ls0"]
+[ext_resource type="Texture2D" uid="uid://bb8oihma7td60" path="res://Assests/Potions/potion_orange.png" id="2_pkgh3"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_0spj7"]
+radius = 11.0
+
+[node name="Area2D" type="Area2D" groups=["magnet"]]
+collision_layer = 2
+collision_mask = 7
+script = ExtResource("1_01ls0")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_0spj7")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.15, 0.15)
+texture = ExtResource("2_pkgh3")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

@@ -1,0 +1,55 @@
+[gd_scene load_steps=6 format=3 uid="uid://b405sp2f4bfhx"]
+
+[ext_resource type="Script" path="res://mini_boss.gd" id="1_ric3j"]
+[ext_resource type="Texture2D" uid="uid://bfc50bti41men" path="res://Assests/Basic Asset Pack/basic magical animations/earth elemental/EarthElemental.png" id="2_kmnik"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_c8y2w"]
+size = Vector2(31.3333, 35.6667)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8l0va"]
+size = Vector2(33.6667, 36.3333)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_p5ecv"]
+size = Vector2(34, 40.6667)
+
+[node name="Mini_Boss" type="CharacterBody2D"]
+scale = Vector2(3, 3)
+motion_mode = 1
+script = ExtResource("1_ric3j")
+speed = 75.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-0.666667, 0.499999)
+shape = SubResource("RectangleShape2D_c8y2w")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(2, 2)
+texture = ExtResource("2_kmnik")
+hframes = 4
+
+[node name="bullet_hitbox" type="Area2D" parent="." groups=["mini_boss"]]
+position = Vector2(-1, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="bullet_hitbox"]
+position = Vector2(0.166666, 0.833332)
+shape = SubResource("RectangleShape2D_8l0va")
+
+[node name="Player_Hitbox" type="Area2D" parent="." groups=["enemy"]]
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player_Hitbox"]
+position = Vector2(-1, 0.333334)
+shape = SubResource("RectangleShape2D_p5ecv")
+
+[node name="HealthBar" type="ProgressBar" parent="."]
+offset_left = -25.3333
+offset_top = -20.6667
+offset_right = -20.3333
+offset_bottom = 31.3333
+rotation = -1.5708
+max_value = 1000.0
+step = 10.0
+value = 1000.0
+fill_mode = 2
+show_percentage = false

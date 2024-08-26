@@ -1,0 +1,53 @@
+[gd_scene load_steps=8 format=3 uid="uid://c635mkpjm5xgl"]
+
+[ext_resource type="Script" path="res://Player.gd" id="1_ifuu7"]
+[ext_resource type="Texture2D" uid="uid://2880kqnq3j0u" path="res://icon.svg" id="2_6n7c1"]
+[ext_resource type="Script" path="res://Gun.gd" id="3_gn4og"]
+[ext_resource type="PackedScene" uid="uid://dheutwpacdmaw" path="res://bullet.tscn" id="4_qpkyl"]
+[ext_resource type="Script" path="res://Enemy_Spawner.gd" id="5_xb5fs"]
+[ext_resource type="Texture2D" uid="uid://ddokrjpyhxwfu" path="res://Assests/aa356740991f8fe5376e7f3e6f2667b6-32bits-32.png" id="6_g8wwn"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_w333t"]
+size = Vector2(64, 64)
+
+[node name="Player" type="CharacterBody2D"]
+collision_layer = 2
+collision_mask = 7
+motion_mode = 1
+wall_min_slide_angle = 0.0
+script = ExtResource("1_ifuu7")
+max_speed = 200.0
+acceleration = 300.0
+friction = 800
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_6n7c1")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_w333t")
+
+[node name="Gun" type="Node2D" parent="."]
+script = ExtResource("3_gn4og")
+bullet_scn = ExtResource("4_qpkyl")
+bullet_speed = 1000.0
+bps = 100.0
+bullet_damage = 200.0
+
+[node name="muzzle" type="Node2D" parent="Gun"]
+position = Vector2(37, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="Gun/muzzle"]
+modulate = Color(0.505882, 0.164706, 0.368627, 1)
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("2_6n7c1")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="Enemy_Spawner" type="Node2D" parent="."]
+script = ExtResource("5_xb5fs")
+radius = 200.0
+speed = null
+
+[node name="Sprite2D" type="Sprite2D" parent="Enemy_Spawner"]
+texture = ExtResource("6_g8wwn")
